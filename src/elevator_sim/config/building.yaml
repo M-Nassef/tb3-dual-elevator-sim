@@ -1,0 +1,91 @@
+# Single source of truth for the building. The Gazebo world (worlds/building.sdf)
+# and the Nav2 map (maps/building.{pgm,yaml}) are generated from this file:
+#   ros2 run elevator_sim generate_building
+# Every floor has the same wall layout, so one 2D map serves all floors.
+world_name: building
+
+floors:            # 1 = ground floor
+  1: {z: 0.0}
+  2: {z: 3.0}
+  3: {z: 6.0}
+
+footprint: {x_min: -8.0, x_max: 8.0, y_min: -5.0, y_max: 5.0}
+wall: {thickness: 0.1, height: 2.5}
+slab_thickness: 0.1
+
+# Wall centre-lines [x1, y1, x2, y2], identical on every floor.
+walls:
+  # outer shell
+  - [-8.0, -5.0,  8.0, -5.0]
+  - [ 8.0, -5.0,  8.0,  5.0]
+  - [ 8.0,  5.0, -8.0,  5.0]
+  - [-8.0,  5.0, -8.0, -5.0]
+  # closed storage areas north/south of the lobby (lobby is y -3.4..3.4 so the
+  # elevator doors, which slide 1.2 m sideways, have room to open)
+  - [-8.0,  3.4, -3.0,  3.4]
+  - [-8.0, -3.4, -3.0, -3.4]
+  # lobby / rooms boundary
+  - [-3.0,  1.25, -3.0,  5.0]
+  - [-3.0, -1.25, -3.0, -5.0]
+  # shaft side walls (E1: y 0.4..2.6, E2: y -2.6..-0.4)
+  - [-8.0,  2.6, -6.0,  2.6]
+  - [-8.0,  0.4, -6.0,  0.4]
+  - [-8.0, -0.4, -6.0, -0.4]
+  - [-8.0, -2.6, -6.0, -2.6]
+  # shaft front wall with two 1.2 m door openings (y 0.9..2.1 and -2.1..-0.9)
+  - [-6.0,  2.1, -6.0,  3.4]
+  - [-6.0, -0.9, -6.0,  0.9]
+  - [-6.0, -3.4, -6.0, -2.1]
+  # corridor walls with 1.2 m room doors centred at x=-0.25 and x=5.25
+  - [-3.0,  1.25, -0.85,  1.25]
+  - [ 0.35, 1.25,  4.65,  1.25]
+  - [ 5.85, 1.25,  8.0,   1.25]
+  - [-3.0, -1.25, -0.85, -1.25]
+  - [ 0.35,-1.25,  4.65, -1.25]
+  - [ 5.85,-1.25,  8.0,  -1.25]
+  # walls between rooms
+  - [ 2.5,  1.25,  2.5,  5.0]
+  - [ 2.5, -1.25,  2.5, -5.0]
+
+# Named goals (x, y, yaw[rad]) - same on every floor.
+rooms:
+  room_a: [-0.25,  3.2,  1.5708]
+  room_b: [ 5.25,  3.2,  1.5708]
+  room_c: [-0.25, -3.2, -1.5708]
+  room_d: [ 5.25, -3.2, -1.5708]
+
+# Unmapped obstacles (not drawn in the Nav2 map): [floor, x, y, size_x, size_y, height]
+boxes:
+  - [1, 1.5,  0.55, 0.5, 0.5, 0.5]
+  - [2, 3.5, -0.55, 0.5, 0.5, 0.5]
+  - [3, -1.8, 0.5, 0.5, 0.5, 0.5]
+
+elevators:
+  e1:
+    shaft: {x_min: -8.0, x_max: -6.0, y_min: 0.4, y_max: 2.6}
+    door:  {y_min: 0.9, y_max: 2.1, x: -6.0, open_dir: 1}   # slides towards +y
+    cabin_center: [-7.0, 1.5]
+    landing: [-4.8, 1.5, 3.14159]      # where the robot waits, facing the doors
+    speed: 0.4                         # m/s
+    door_speed: 0.4                    # m/s
+  e2:
+    shaft: {x_min: -8.0, x_max: -6.0, y_min: -2.6, y_max: -0.4}
+    door:  {y_min: -2.1, y_max: -0.9, x: -6.0, open_dir: -1} # slides towards -y
+    cabin_center: [-7.0, -1.5]
+    landing: [-4.8, -1.5, 3.14159]
+    speed: 0.4
+    door_speed: 0.4
+
+robots:
+  tb3_1:
+    model: burger
+    elevator: e1
+    home: [6.0, 0.5, 3.14159]
+    radius: 0.105
+  tb3_2:
+    model: waffle
+    elevator: e2
+    home: [6.0, -0.5, 3.14159]
+    radius: 0.22
+
+map: {resolution: 0.05, margin: 0.5}

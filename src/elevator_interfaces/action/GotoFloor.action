@@ -1,0 +1,13 @@
+# Send the cabin to a floor (1 = ground). The elevator closes its doors
+# (with doorway-safety check), travels, and opens the doors at the target.
+int32 floor
+string requester        # robot name, for logging/ownership
+---
+bool success
+int32 floor
+string message
+---
+string phase            # CLOSING_DOORS | MOVING | OPENING_DOORS | REOPENING | DONE
+int32 current_floor     # nearest floor, -1 while between floors
+float64 height          # cabin height [m]
+float64 door_opening    # 0.0 closed .. 1.0 fully open (doors of the current floor)

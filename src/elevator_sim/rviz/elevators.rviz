@@ -1,0 +1,113 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Time
+    Name: Time
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Map
+      Name: Map
+      Enabled: true
+      Topic:
+        Value: /map
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Alpha: 0.8
+      Color Scheme: map
+    - Class: rviz_default_plugins/RobotModel
+      Name: tb3_1 (Burger)
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /tb3_1/robot_description
+        Durability Policy: Transient Local
+      TF Prefix: tb3_1
+    - Class: rviz_default_plugins/RobotModel
+      Name: tb3_2 (Waffle)
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /tb3_2/robot_description
+        Durability Policy: Transient Local
+      TF Prefix: tb3_2
+    - Class: rviz_default_plugins/LaserScan
+      Name: tb3_1 scan
+      Enabled: true
+      Topic:
+        Value: /tb3_1/scan
+        Reliability Policy: Best Effort
+      Color Transformer: FlatColor
+      Color: 50; 100; 255
+      Size (m): 0.04
+      Style: Points
+      Size (Pixels): 3
+    - Class: rviz_default_plugins/LaserScan
+      Name: tb3_2 scan
+      Enabled: true
+      Topic:
+        Value: /tb3_2/scan
+        Reliability Policy: Best Effort
+      Color Transformer: FlatColor
+      Color: 255; 140; 0
+      Size (m): 0.04
+      Style: Points
+      Size (Pixels): 3
+    - Class: rviz_default_plugins/Path
+      Name: tb3_1 plan
+      Enabled: true
+      Topic:
+        Value: /tb3_1/plan
+      Color: 50; 100; 255
+      Line Style: Lines
+    - Class: rviz_default_plugins/Path
+      Name: tb3_2 plan
+      Enabled: true
+      Topic:
+        Value: /tb3_2/plan
+      Color: 255; 140; 0
+      Line Style: Lines
+    - Class: rviz_default_plugins/Map
+      Name: tb3_1 local costmap
+      Enabled: false
+      Topic:
+        Value: /tb3_1/local_costmap/costmap
+      Color Scheme: costmap
+      Alpha: 0.5
+    - Class: rviz_default_plugins/Map
+      Name: tb3_2 local costmap
+      Enabled: false
+      Topic:
+        Value: /tb3_2/local_costmap/costmap
+      Color Scheme: costmap
+      Alpha: 0.5
+    - Class: rviz_default_plugins/MarkerArray
+      Name: elevator status
+      Enabled: true
+      Topic:
+        Value: /elevator_markers
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: false
+  Global Options:
+    Fixed Frame: map
+    Background Color: 48; 48; 48
+    Frame Rate: 15
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Value: /tb3_1/goal_pose
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Current View
+      X: 0
+      Y: 0
+      Scale: 45
+      Angle: 0
+Window Geometry:
+  Width: 1200
+  Height: 800

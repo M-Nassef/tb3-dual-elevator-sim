@@ -1,0 +1,12 @@
+# Commands to an elevator controller
+uint8 CLOSE_DOORS=0     # robot finished boarding/exiting: close the doors
+uint8 OPEN_DOORS=1      # re-open the doors at the current floor
+uint8 BLOCK_DOOR=10     # test hook: simulate an obstruction in the doorway
+uint8 CLEAR_DOOR=11     # test hook: remove the simulated obstruction
+uint8 EMERGENCY=20      # stop all motion immediately, abort active goal
+uint8 RESET=21          # clear FAULT / EMERGENCY and return to IDLE
+uint8 command
+string requester
+---
+bool accepted
+string message
